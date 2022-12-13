@@ -193,7 +193,7 @@
         "tab": "3842d2a99643bb20",
         "order": 1,
         "disp": true,
-        "width": 5,
+        "width": "6",
         "collapse": false,
         "className": ""
     },
@@ -308,8 +308,8 @@
         "payloadType": "str",
         "topic": "topic",
         "topicType": "msg",
-        "x": 450,
-        "y": 400,
+        "x": 430,
+        "y": 760,
         "wires": [
             []
         ]
@@ -458,64 +458,8 @@
         "payloadType": "str",
         "topic": "topic",
         "topicType": "msg",
-        "x": 440,
-        "y": 440,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "9b80e9b02ffbe1ee",
-        "type": "rpi-gpio in",
-        "z": "6a9feb17a11176f2",
-        "name": "",
-        "pin": "25",
-        "intype": "up",
-        "debounce": "25",
-        "read": false,
-        "bcm": true,
         "x": 420,
-        "y": 620,
-        "wires": [
-            [
-                "f7261de9813a573a"
-            ]
-        ]
-    },
-    {
-        "id": "f7261de9813a573a",
-        "type": "debug",
-        "z": "6a9feb17a11176f2",
-        "name": "debug 1",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 580,
-        "y": 620,
-        "wires": []
-    },
-    {
-        "id": "1a224ca0aa074318",
-        "type": "ui_template",
-        "z": "6a9feb17a11176f2",
-        "group": "3062510839ebd5c6",
-        "name": "",
-        "order": 1,
-        "width": 0,
-        "height": 0,
-        "format": "<!DOCTYPE html>\n<html>\n\n<head>\n    <meta charset=\"utf-8\">\n    <title>Display Webcam Stream</title>\n\n    <style>\n        #container {\n            margin: 0px auto;\n            width: 350px;\n            height: 275px;\n            border: 10px #333 solid;\n        }\n\n        #videoElement {\n            width: 350px;\n            height: 275px;\n            background-color: #666;\n        }\n    </style>\n</head>\n\n<body>\n    <div id=\"container\">\n        <video autoplay=\"true\" id=\"videoElement\">\n\n        </video>\n    </div>\n    <script>\n    var video = document.querySelector(\"#videoElement\");\n    \n    if (navigator.mediaDevices.getUserMedia) {\n    navigator.mediaDevices.getUserMedia({ video: true })\n    .then(function (stream) {\n    video.srcObject = stream;\n    })\n    .catch(function (err0r) {\n    console.log(\"Something went wrong!\");\n    });\n    }\n    </script>\n</body>\n\n</html>",
-        "storeOutMessages": true,
-        "fwdInMessages": true,
-        "resendOnRefresh": true,
-        "templateScope": "local",
-        "className": "",
-        "x": 100,
-        "y": 240,
+        "y": 800,
         "wires": [
             []
         ]
@@ -524,44 +468,18 @@
         "id": "802c831d2272c80a",
         "type": "ui_button",
         "z": "6a9feb17a11176f2",
-        "name": "",
+        "name": "Forward",
         "group": "4ab645d8d9501315",
         "order": 3,
         "width": 0,
         "height": 0,
         "passthru": false,
-        "label": "Forward",
+        "label": "",
         "tooltip": "",
         "color": "",
         "bgcolor": "",
         "className": "",
-        "icon": "",
-        "payload": "",
-        "payloadType": "str",
-        "topic": "topic",
-        "topicType": "msg",
-        "x": 100,
-        "y": 440,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "f2edc5d2ce505d2d",
-        "type": "ui_button",
-        "z": "6a9feb17a11176f2",
-        "name": "",
-        "group": "4ab645d8d9501315",
-        "order": 6,
-        "width": 0,
-        "height": 0,
-        "passthru": false,
-        "label": "Backward",
-        "tooltip": "",
-        "color": "",
-        "bgcolor": "",
-        "className": "",
-        "icon": "",
+        "icon": "fa-arrow-up",
         "payload": "",
         "payloadType": "str",
         "topic": "topic",
@@ -569,51 +487,55 @@
         "x": 100,
         "y": 480,
         "wires": [
-            []
+            [
+                "d99d62fe79565d57"
+            ]
+        ]
+    },
+    {
+        "id": "f2edc5d2ce505d2d",
+        "type": "ui_button",
+        "z": "6a9feb17a11176f2",
+        "name": "Backward",
+        "group": "4ab645d8d9501315",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "fa-arrow-down",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 100,
+        "y": 520,
+        "wires": [
+            [
+                "62f1ea47def5574f"
+            ]
         ]
     },
     {
         "id": "8057072fc7af4b12",
         "type": "ui_button",
         "z": "6a9feb17a11176f2",
-        "name": "",
+        "name": "Left",
         "group": "4ab645d8d9501315",
         "order": 4,
-        "width": 0,
-        "height": 0,
+        "width": "2",
+        "height": "1",
         "passthru": false,
-        "label": "Left",
+        "label": "",
         "tooltip": "",
         "color": "",
         "bgcolor": "",
         "className": "",
-        "icon": "",
-        "payload": "",
-        "payloadType": "str",
-        "topic": "topic",
-        "topicType": "msg",
-        "x": 90,
-        "y": 520,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "b73226ac85145176",
-        "type": "ui_button",
-        "z": "6a9feb17a11176f2",
-        "name": "",
-        "group": "4ab645d8d9501315",
-        "order": 5,
-        "width": 0,
-        "height": 0,
-        "passthru": false,
-        "label": "Right",
-        "tooltip": "",
-        "color": "",
-        "bgcolor": "",
-        "className": "",
-        "icon": "",
+        "icon": "fa-arrow-left",
         "payload": "",
         "payloadType": "str",
         "topic": "topic",
@@ -621,25 +543,27 @@
         "x": 90,
         "y": 560,
         "wires": [
-            []
+            [
+                "0a86b922cc0bac08"
+            ]
         ]
     },
     {
-        "id": "b4af7ff4e5036f68",
+        "id": "b73226ac85145176",
         "type": "ui_button",
         "z": "6a9feb17a11176f2",
-        "name": "",
+        "name": "Right",
         "group": "4ab645d8d9501315",
-        "order": 8,
-        "width": 0,
-        "height": 0,
+        "order": 5,
+        "width": "2",
+        "height": "1",
         "passthru": false,
-        "label": "CW",
+        "label": "",
         "tooltip": "",
         "color": "",
         "bgcolor": "",
         "className": "",
-        "icon": "",
+        "icon": "fa-arrow-right",
         "payload": "",
         "payloadType": "str",
         "topic": "topic",
@@ -647,25 +571,27 @@
         "x": 90,
         "y": 600,
         "wires": [
-            []
+            [
+                "12f8a1f0296dfba2"
+            ]
         ]
     },
     {
-        "id": "b89da7ba921b23b3",
+        "id": "b4af7ff4e5036f68",
         "type": "ui_button",
         "z": "6a9feb17a11176f2",
-        "name": "",
+        "name": "CW",
         "group": "4ab645d8d9501315",
-        "order": 9,
+        "order": 8,
         "width": 0,
         "height": 0,
         "passthru": false,
-        "label": "CCW",
+        "label": "",
         "tooltip": "",
         "color": "",
         "bgcolor": "",
         "className": "",
-        "icon": "",
+        "icon": "fa-repeat ",
         "payload": "",
         "payloadType": "str",
         "topic": "topic",
@@ -677,25 +603,26 @@
         ]
     },
     {
-        "id": "cd09453718f2356b",
-        "type": "ui_slider",
+        "id": "b89da7ba921b23b3",
+        "type": "ui_button",
         "z": "6a9feb17a11176f2",
-        "name": "",
-        "label": "Speed (in mm/s)",
-        "tooltip": "",
+        "name": "CCW",
         "group": "4ab645d8d9501315",
-        "order": 2,
+        "order": 9,
         "width": 0,
         "height": 0,
-        "passthru": true,
-        "outs": "end",
+        "passthru": false,
+        "label": "",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "fa-undo",
+        "payload": "",
+        "payloadType": "str",
         "topic": "topic",
         "topicType": "msg",
-        "min": 0,
-        "max": "1000",
-        "step": "100",
-        "className": "[{\"id\":\"4bc92110.64406\",\"type\":\"ui_template\",\"z\":\"7993e570.4aafac\",\"group\":\"93892d22.50ab8\",\"name\":\"\",\"order\":3,\"width\":0,\"height\":0,\"format\":\"<style>\\nmd-slider[md-discrete] .md-sign,\\nmd-slider[md-discrete] .md-sign:after {\\n opacity: 1;\\n -webkit-transform: translate3d(0, 0, 0) scale(1);\\n transform: translate3d(0, 0, 0) scale(1);\\n}\\n</style>\",\"storeOutMessages\":true,\"fwdInMessages\":true,\"templateScope\":\"global\",\"x\":660,\"y\":320,\"wires\":[[]]},{\"id\":\"992bc11f.dc2a4\",\"type\":\"ui_slider\",\"z\":\"7993e570.4aafac\",\"name\":\"\",\"label\":\"slider\",\"tooltip\":\"\",\"group\":\"93892d22.50ab8\",\"order\":4,\"width\":0,\"height\":0,\"passthru\":true,\"outs\":\"end\",\"topic\":\"\",\"min\":0,\"max\":10,\"step\":1,\"x\":650,\"y\":360,\"wires\":[[]]},{\"id\":\"93892d22.50ab8\",\"type\":\"ui_group\",\"z\":\"\",\"name\":\"charts\",\"tab\":\"a24618c5.be59c8\",\"disp\":true,\"width\":\"14\",\"collapse\":false},{\"id\":\"a24618c5.be59c8\",\"type\":\"ui_tab\",\"z\":\"\",\"name\":\"tab 1\",\"icon\":\"weekend\",\"order\":1,\"disabled\":false,\"hidden\":false}]",
-        "x": 120,
+        "x": 90,
         "y": 680,
         "wires": [
             []
@@ -734,27 +661,6 @@
         "x": 110,
         "y": 760,
         "wires": []
-    },
-    {
-        "id": "90256ec627cab610",
-        "type": "ui_template",
-        "z": "6a9feb17a11176f2",
-        "group": "",
-        "name": "",
-        "order": 4,
-        "width": 0,
-        "height": 0,
-        "format": "<!DOCTYPE html>\n<html>\n\n<head>\n    <title>Sample Code</title>\n</head>\n\n<body>\n    <h1>Opening a folder from HTML code</h1>\n    <a href=\"/home/pi/images\">Click to open a folder</a>\n</body>\n\n</html>",
-        "storeOutMessages": true,
-        "fwdInMessages": true,
-        "resendOnRefresh": true,
-        "templateScope": "local",
-        "className": "",
-        "x": 420,
-        "y": 360,
-        "wires": [
-            []
-        ]
     },
     {
         "id": "4fa73dd9.83cca4",
@@ -1495,6 +1401,218 @@
             [
                 "d19cc7d8.646328"
             ]
+        ]
+    },
+    {
+        "id": "ca8e9d953f092c2e",
+        "type": "ui_button",
+        "z": "6a9feb17a11176f2",
+        "name": "Stop Mobile Robot",
+        "group": "4ab645d8d9501315",
+        "order": 4,
+        "width": "2",
+        "height": "1",
+        "passthru": false,
+        "label": "",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "fa-hand-paper-o ",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 130,
+        "y": 440,
+        "wires": [
+            [
+                "f6b5ebe00995a7fd"
+            ]
+        ]
+    },
+    {
+        "id": "b515cbf20ef9cbc9",
+        "type": "ui_template",
+        "z": "6a9feb17a11176f2",
+        "group": "3062510839ebd5c6",
+        "name": "",
+        "order": 1,
+        "width": "8",
+        "height": "9",
+        "format": "<script>\n    var value = \"1\";\n// or overwrite value in your callback function ...\nthis.scope.action = function() { return value; }\n\nfunction updateF() {\n  var source = '/photo1.JPEG',\n  timestamp = (new Date()).getTime(),\n  newUrl = source + '?_=' + timestamp;\n  document.getElementById(\"photo\").src = newUrl;\n}\n</script>\n\n<md-button ng-click=\"send({payload:action()})\" onclick=\"setTimeout(updateF, 2500);\"\n    style=\"padding:40px; margin-bottom: 40px;\">\n    <ui-icon icon=\"camera\"></ui-icon>\n    Take a photo<br>\n</md-button>\n\n<div style=\"margin-bottom:40px;\">\n    <img src=\"/home/pi/Pictures/photo1.JPEG\" id=\"photo\" width=\"100%\" height=\"100%\">\n</div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 100,
+        "y": 180,
+        "wires": [
+            [
+                "e6b6d52f78da8d36"
+            ]
+        ]
+    },
+    {
+        "id": "dfab2222c829c896",
+        "type": "debug",
+        "z": "6a9feb17a11176f2",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 460,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "e6b6d52f78da8d36",
+        "type": "usbcamera",
+        "z": "6a9feb17a11176f2",
+        "filemode": "1",
+        "filename": "photo1.JPEG",
+        "filedefpath": "1",
+        "filepath": "",
+        "fileformat": "jpeg",
+        "resolution": "1",
+        "name": "",
+        "x": 290,
+        "y": 180,
+        "wires": [
+            [
+                "dfab2222c829c896"
+            ]
+        ]
+    },
+    {
+        "id": "702c493892bc194e",
+        "type": "debug",
+        "z": "6a9feb17a11176f2",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 900,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "d99d62fe79565d57",
+        "type": "exec",
+        "z": "6a9feb17a11176f2",
+        "command": "python3 /home/pi/MobileRobotCommands/forward.py",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 480,
+        "y": 460,
+        "wires": [
+            [
+                "702c493892bc194e"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "f6b5ebe00995a7fd",
+        "type": "exec",
+        "z": "6a9feb17a11176f2",
+        "command": "python3 /home/pi/MobileRobotCommands/stop.py",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 470,
+        "y": 400,
+        "wires": [
+            [
+                "702c493892bc194e"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "62f1ea47def5574f",
+        "type": "exec",
+        "z": "6a9feb17a11176f2",
+        "command": "python3 /home/pi/MobileRobotCommands/backward.py",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 490,
+        "y": 520,
+        "wires": [
+            [
+                "702c493892bc194e"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "0a86b922cc0bac08",
+        "type": "exec",
+        "z": "6a9feb17a11176f2",
+        "command": "python3 /home/pi/MobileRobotCommands/left.py",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 460,
+        "y": 580,
+        "wires": [
+            [
+                "702c493892bc194e"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "12f8a1f0296dfba2",
+        "type": "exec",
+        "z": "6a9feb17a11176f2",
+        "command": "python3 /home/pi/MobileRobotCommands/right.py",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 470,
+        "y": 640,
+        "wires": [
+            [
+                "702c493892bc194e"
+            ],
+            [],
+            []
         ]
     }
 ]
