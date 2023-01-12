@@ -1,2 +1,2 @@
-# MobileRobot3DImaging-UI
-UI of 3D imaging Mobile Robot
+# MobileRobot3DImaging
+3D imaging Mobile Robot
