@@ -3,10 +3,11 @@ import numpy as np
 import time
 
 mobileRobotSer = serial.Serial('/dev/ttyUSB0', 115200, timeout=1)
-lineSer = serial.Serial1('/dev/ttyUSB1', 9600, timeout=1)
+lineSer = serial.Serial('/dev/ttyUSB1', 9600, timeout=1)
 
 speedL=0
 speedR=0
+buzz=0
 oldposition =0 
 oldtime =0
 
@@ -33,12 +34,20 @@ lastError=0
 Kp=8
 Kd=0
 
+#robot movement variables
+distanceR = float(0)
+distanceL = float(0)
+#distanceAll = float(0)
+lastEncValL=0
+lastEncValR=0
+
 def startSerialRead():
     global mobileRobotSer
     x=0
     while x<10:
         mobileRobotSer.readline()
         x=x+1
+
 def setSpeed(speedLeft, speedRight):
     global speedL,speedR
     speedL = speedLeft
@@ -51,8 +60,8 @@ def serialCommand():
     global mobileRobotSer
     data = np.zeros(8, dtype=np.uint8)
 
-    buzz = 0x00
-
+    #buzz = 0x00
+    global buzz
     #hex of 'm' 'r' 'i' 0x6D 0x72 0x69
     data[0] = 0x6D
     data[1] = 0x72
@@ -68,6 +77,41 @@ def serialCommand():
     data[7] = buzz
 
     mobileRobotSer.write(data)
+
+def resetEncoder():
+    global buzz, lastEncValL, lastEncValR
+    lastEncValL=0
+    lastEncValR=0
+    buzz = 1
+    serialCommand()
+    time.sleep(0.1)
+    buzz = 0
+    serialCommand()
+
+def getDistanceMobileRobot():
+    global distanceR, distanceL, distanceAll, lastEncValR, lastEncValL
+    
+    encValR      = int(getSerialDataMobileRobot(EncoderR))
+    encValL      = int(getSerialDataMobileRobot(EncoderL))
+
+    encSampR = 0
+    encSampL = 0
+
+    if encValR<lastEncValR:
+        encSampR     = (encValR+65535)-lastEncValR
+    else: 
+        encSampR     = encValR-lastEncValR
+
+    if encValL<lastEncValL:
+        encSampL     = (encValL+65535)-lastEncValL
+    else: 
+        encSampL     = encValL-lastEncValL	
+
+    distanceR   = distanceR + encSampR 
+    distanceL   = distanceL + encSampL
+
+    lastEncValR = encValR
+    lastEncValL = encValL
 
 def errorMapping(sensorState):
     errorState=0
@@ -115,10 +159,38 @@ def errorMapping(sensorState):
         errorState = -7
     return errorState
 
-def getSerialData(certainData):
+def getSerialDataMobileRobot(certainData):
     global mobileRobotSer
     takenData   = mobileRobotSer.readline().decode("utf-8").rstrip()
     return takenData.split(',')[certainData]
+
+def followLine():
+    global lastError
+    value=lineSer.readline()
+    error=0
+    value=value.decode("utf-8").rstrip()
+    if value.isnumeric():
+        error   =   int(value)
+        error   =   errorMapping(error)
+        P       =   Kp*error
+        D       =   Kd*(error-lastError)
+        PD      =   P+D
+        #setSpeed(100-PD,100+PD)
+        lastError=error
+
+def line_KS():
+    error=0
+    while error != 0b11111111:
+        value=lineSer.readline()
+        error=0
+        value=value.decode("utf-8").rstrip()
+        if value.isnumeric():
+            error   =   int(value)
+        #getDistanceMobileRobot()
+        followLine()
+        #distanceAll=(((distanceL/32767)*471)+((distanceR/32767)*471))/2
+        print(distanceAll)
+
 
 #===============BASED ON TIME TO DETERMINE THE DISTANCE=================
     # newposition = getSerialData(EncoderR)
@@ -143,24 +215,26 @@ def getSerialData(certainData):
 
 #====================Main Program=======================
 startSerialRead()
-startTime = round(time.time())
 
-while True:
-    newposition = getSerialData(EncoderR)
-    newtime = time.time()*1000
-    setSpeed(0,1000)
-    #print(newtime-oldtime)
-    if round((newtime-oldtime))==70:
-        vel = (((int(newposition)-int(oldposition))/32768)*0.471) / 1000
-        #vel = (int(newposition)-int(oldposition)) /(int(newtime)-int(oldtime))
-        print ("speed = ")
-        print (vel)
-        print ("\n")
-        #dist = vel * (newtime-startTime)
-        #print(dist)
+
+setSpeed(0,0)
+time.sleep(1)
+setSpeed(100,-100)
+time.sleep(1)
+setSpeed(0,0)
+time.sleep(1)
+setSpeed(-100,100)
+time.sleep(2)  
+setSpeed(0,0)
+time.sleep(1)  
+setSpeed(100,-100)
+time.sleep(1)
+setSpeed(0,0)
+time.sleep(18)
+resetEncoder()  
+
+line_KS()
+
+setSpeed(0,0)
     
-    oldposition = newposition
-    oldtime = newtime 
    
-
-mobileRobotSer.close()
